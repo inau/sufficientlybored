@@ -7,10 +7,10 @@
  * module.exports = function(done) { ... }
  */
 //require('dotenv').config();
-console.log('STRING '+process.env.create_admin);
+
 exports.create = {
 	User: [
-		JSON.parse(process.env.create_admin),
+		JSON.parse(process.env.CREATE_ADMIN),
 	]
 };
 
