@@ -1,0 +1,54 @@
+{% extends "layouts/default.html" %}
+
+{% macro descblock(descr) %}
+<div class="col-xs-9">
+	<pp class="ds"> {{descr}} </pp>
+</div>
+{% endmacro %}
+{% macro imgblock(src) %}
+<div class="col-xs-3">
+	<image class="col-xs-12" src="{{src}}"></image>
+</div>
+{% endmacro %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="jumbotron mContent col-xs-12">
+			{% if user.canAccessKeystone %}
+				<a href="/admin/createproject?pid={{pid}}">
+					<p class="mNavLabel"><i class="glyphicon glyphicon-edit"></i></p>
+				</a>
+			{% endif %}
+			{% if project %}
+			<hh3 class="ds">{{ project.title }} sec: {{ project.sections.length }}</hh3>
+			<hr>
+			{% set cls = cycler(0, 1) %}
+			{% for sec in project.sections %}
+				<div class="col-xs-12">
+					{% if cls.next() == 0 %}
+					{{ descblock(sec.description) }}
+					{{ imgblock('data:image/jpeg;base64,'+sec.image) }}
+					{% else %}
+					{{ imgblock('data:image/jpeg;base64,'+sec.image) }}
+					{{ descblock(sec.description) }}
+					{% endif %}
+				</div>
+
+			<div class="col-xs-12">
+			<br>
+			</div>
+			{% endfor %}
+			{% if project.links.length > 0 %}
+			<hr>
+			<div class="col-xs-12">
+				{% for link in project.links %}
+				<pp class="ds col-xs-6 col-md-4"><a id="{{link}}" href="{{link}}">{{link}}</a></pp>
+				{% endfor %}
+			</div>
+			{% endif %}
+			{% else %}
+			PROJECT {{ pid }}
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

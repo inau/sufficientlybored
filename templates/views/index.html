@@ -1,0 +1,62 @@
+{% extends "layouts/default.html" %}
+
+{% block content %}
+	<div class="container-fluid">
+			<div class="jumbotron banner">
+				<h1>Sufficiently Bored</h1>
+			</div>
+		
+			<div class="col-xs-12 jumbotron mContent">
+				<div class="col-xs-12 col-md-4 ">
+					<pp class="ds">This website is created as means to demo the different projects i have been part of during the course of my studies at the IT University of Copenhagen and during my professional career.</pp>
+				</div>
+				<div class="col-xs-12 col-md-4">
+					<image src="/images/language/java.webp" class="col-xs-4"></image>
+					<image src="/images/language/c-cpp.png" class="col-xs-4"></image>
+					<image src="/images/language/python.png" class="col-xs-4"></image>
+					<image src="/images/language/node.svg" class="col-xs-4"></image>
+					<image src="/images/language/unity.png" class="col-xs-4"></image>
+					<image src="/images/language/html5.png" class="col-xs-4"></image>
+				</div>
+				<div class="col-xs-12 col-md-4">
+					<pp class="ds">Projects are of a wide variety, including desktop applications, web applications, and native android applications.<br>
+						Additionally i have experimented with popular frameworks.</pp>
+				</div>
+				<div class="col-xs-12">
+					<br>
+				</div>
+				<pp class="ds col-xs-12" style="text-align: center; font-size: x-large;">
+					If i have peeked your interest feel free to browse in the projects
+				</pp>
+			</div>
+		{% if projects %}
+			{% set cls = cycler(1, 2, 0) %}
+		<div id="proj_recent" class="col-xs-12 jumbotron mContent">
+				<hh4 id="rec_title" class="ds">{{projects[0].title}}</hh4>
+				<div class="col-xs-9">
+					<pp id="rec_desc" class="ds"> {{projects[0].sections[0].description}} </pp>
+				</div>
+				<div class="col-xs-12">
+					<image id="rec_img" class="col-xs-12 img-circle" src="{{projects[0].sections[0].image}}"></image>
+				</div>
+				<div class="ds" >o o o</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+<script>
+	function change_recent(id) {
+		console.log('id '+id);
+		$('#rec_title').html( projects[id].title );
+		$('#rec_desc').html( projects[id].sections[0].description );
+		$('#rec_img').html( projects[id].sections[0].image );
+		//do something with clicks
+	}
+
+	var interval;
+	$(document).ready( function () {
+		console.log('interval init');
+		interval = setInterval(function () { change_recent(cls.next()); },100);
+	});
+</script>

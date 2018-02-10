@@ -1,0 +1,190 @@
+{% import "mixins/flash-messages.html" as FM %}
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>{{ title|default("inau") }}</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+		{# Customise the stylesheet for your site by editing /public/styles/site.less
+		//- All .less files will be automatically compiled and minified in production. #}
+		<link href="/styles/site.min.css" rel="stylesheet">
+
+		{# This file provides the default styling for the KeystoneJS Content Editor #}
+		{% if user and user.canAccessKeystone %}
+			<link href="/keystone/styles/content/editor.min.css" rel="stylesheet">
+		{% endif %}
+
+		{# HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+		   Safely remove this block if you are not targeting IE8 #}
+		<!--[if lt IE 9]>
+			<script src="//cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.js"></script>
+			<script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+		<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+		
+		{# Include template-specific stylesheets by extending the css block #}
+		{% block css %}{% endblock %}
+
+		{# Add any other template-specific HEAD tags by extending the head block #}
+		{% block head %}{% endblock %}
+	</head>
+	<body>
+
+	{# JAVASCRIPT #}
+
+	{# jQuery 1.11.3 is included by default, and required by both Bootstrap
+	and the KeystoneJS Content Editor. If you are not targeting IE8,
+	you can upgrade to 2.1.4 (also bundled) for better performance. #}
+	<script src="/js/jquery/jquery-1.11.3.min.js"></script>
+
+	{# Customise which Bootstrap javascript files are served by including
+	them specifically here, instead of bootstrap-3.3.5.min.js #}
+	<script src="/js/bootstrap/bootstrap-3.3.5.min.js"></script>
+
+	{# The KeystoneJS Content Editor provides support for ks-editable data attributes,
+	which generate links to edit content for users who can access Keystone #}
+	{% if user and user.canAccessKeystone %}
+	<script src="/keystone/js/content/editor.js"></script>
+	{% endif %}
+
+	{# Add scripts that are globally required by your site here. #}
+	<script src="/js/modal/modal.js"></script>
+
+	
+	{# Include template-specific javascript files by extending the js block #}
+	{% block js %}{% endblock %}
+	
+		{# HEADER #}
+	<div>
+
+		{% if user %}
+		{% else %}
+		<!-- The Modal -->
+		<div id="signin_modal" class="backdrop modal-hide col-xs-12 row">
+
+			<!-- Modal content -->
+			<div class="col-xs-1 col-md-4"></div>
+			<div class="mContent modal-content col-xs-10 col-md-4">
+				<div>
+					<span onclick="modal_hide('signin_modal');" class="close">&times;</span>
+				</div>
+				<br>
+				<br>
+				<form novalidate action="/" method="post">
+					<input type="hidden" name="action" value="user.signin">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<input id="email" type="text" class="form-control" name="email" value="{{formData.email}}" placeholder="Email">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input id="password" type="password" class="form-control" name="password" value="{{formData.password}}" placeholder="Password">
+					</div>
+					<br>
+					<button class="btn btn-success col-xs-12" type="submit">Submit</button>
+				</form>
+			</div>
+
+		</div>
+		{% endif %}
+		
+		<div id="header">
+			{# Customise your site"s navigation by changing the navLinks Array in ./routes/middleware.js
+			   ... or completely change this header to suit your design. #}
+			<div role="navigation" class="mNav navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse-nav">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar ds"></span>
+							<span class="icon-bar ds"></span>
+							<span class="icon-bar ds"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse navbar-collapse-nav">
+						<ul class="nav navbar-nav navbar-left">
+							{% for link in navLinks %}
+								<li class="{{ 'active activeh' if link.key === section else '' }} ">
+									<a href="{{ link.href }}"><p class="{{ 'activeText' if link.key === section else 'mNavLabel' }}">{{ link.label }}</p></a>
+								</li>
+							{% endfor %}
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							{% if user %}
+								<li><a href="/keystone/signout"><p class="mNavLabel">Sign Out</p></a></li>
+							{% else %}
+								<li><a href="" onclick="modal_show('signin_modal'); return false;"><p class="mNavLabel">Sign In</p></a></li>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		{% if user and user.canAccessKeystone %}
+			<div role="navigation" class="mNav navbar-default">
+				<hr class="mNavLabel-nohover" style="margin-top: 0%; margin-bottom: 0%;">
+				<label class="glyphicon glyphicon-wrench mNavLabel-nohover">Admin</label>
+				<hr class="mNavLabel-nohover" style="margin-top: 0%; margin-bottom: 0%;">
+
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse-adm">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar icon-bar-adm" ></span>
+							<span class="icon-bar icon-bar-adm"></span>
+							<span class="icon-bar icon-bar-adm"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse navbar-collapse-adm">
+						<ul class="nav navbar-nav navbar-left">
+							{% for l in admLinks %}
+							<li class="{{ 'active activeh' if l.key === section else '' }} ">
+								<a href="{{ l.href }}"><p class="{{ 'activeText' if l.key === section else 'mNavLabel' }}">{{ l.label }}</p></a>
+							</li>
+							{% endfor %}
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="/keystone"><p class="mNavLabel">Open Keystone</p></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		</div>
+
+		{% block headerextra %}{% endblock %}
+	</div>
+
+		{# BODY #}
+		<div id="body">
+			{# NOTE:
+			   There is no .container wrapping class around body blocks to allow more flexibility in design.
+			   Remember to include it in your templates when you override the intro and content blocks! #}
+
+			{# The Intro block appears above flash messages (used for temporary information display) #}
+			{% block intro %}{% endblock %}
+
+			{# Flash messages allow you to display once-off status messages to users, e.g. form
+			   validation errors, success messages, etc. #}
+			{{ FM.flashMessages(messages) }}
+
+			{# The content block should contain the body of your template"s content #}
+			{% block content %}{% endblock %}
+		</div>
+
+
+		{# FOOTER #}
+		<div id="footer" class="container">
+			{# You don"t _have_ to include a link saying your site is powered by KeystoneJS, but we appreciate it! #}
+			<p>Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.</p>
+		</div>
+
+
+		
+	</body>
+</html>

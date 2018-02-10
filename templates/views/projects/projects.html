@@ -1,0 +1,39 @@
+{% extends "layouts/default.html" %}
+
+{% macro descblock(title, descr) %}
+<div class="col-xs-12 col-md-9">
+	<hh3 class="ds">{{title}}</hh3><br>
+	<hr>
+	<textarea readonly class="ds item-descr col-md-9" style="text-justify: distribute">
+		{{descr}}
+	</textarea>
+</div>
+{% endmacro %}
+{% macro imgblock(src) %}
+<image class="col-xs-12 col-md-3 img-circle" src="data:image/jpeg;base64,{{src}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+{% endmacro %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="jumbotron mContent col-xs-12">
+			<div class="row">
+			{% if data.projects %}
+				{% set cls = cycler(0, 1) %}
+				{% for pro in data.projects %}
+				<a href="/projects/{{pro._id}}">
+					<div class="col-xs-12 ">
+						{% if cls.next() == 0 %}
+						{{imgblock(pro.sections[0].image)}}
+						{{descblock(pro.title, pro.sections[0].description)}}
+						{% else %}
+						{{descblock(pro.title, pro.sections[0].description)}}
+						{{imgblock(pro.sections[0].image)}}
+						{% endif %}
+					</div>
+				</a>
+				{% endfor %}
+			{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
