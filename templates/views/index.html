@@ -2,11 +2,11 @@
 
 {% block content %}
 	<div class="container-fluid">
-			<div class="jumbotron banner">
+			<div class="jumbotron mJumbotron banner">
 				<h1>Sufficiently Bored</h1>
 			</div>
 		
-			<div class="col-xs-12 jumbotron mContent">
+			<div class="col-xs-12 jumbotron mJumbotron mContent">
 				<div class="col-xs-12 col-md-4 ">
 					<pp class="ds">This website is created as means to demo the different projects i have been part of during the course of my studies at the IT University of Copenhagen and during my professional career.</pp>
 				</div>
@@ -31,7 +31,7 @@
 			</div>
 		{% if projects %}
 			{% set cls = cycler(1, 2, 0) %}
-		<div id="proj_recent" class="col-xs-12 jumbotron mContent">
+		<div id="proj_recent" class="col-xs-12 jumbotron mJumbotron mContent">
 				<hh4 id="rec_title" class="ds">{{projects[0].title}}</hh4>
 				<div class="col-xs-9">
 					<pp id="rec_desc" class="ds"> {{projects[0].sections[0].description}} </pp>

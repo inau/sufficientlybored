@@ -7,7 +7,7 @@
 <script src="../../js/jquery/jquery-2.1.4.js"></script>
 
 <div class="container-fluid">
-	<div class="jumbotron mContent col-xs-12">
+	<div class="jumbotron mJumbotron mContent col-xs-12">
 	{% if user.canAccessKeystone %}
 		{% if not data.validationErrors %}
 		{% if data.project %}
@@ -15,8 +15,8 @@
 				<h2 class="ds">Existing sections:</h2>
 				{% for sec in data.project.sections %}
 					<div class="col-xs-12">
-						<div class="col-xs-9"> {{ sec.description }} </div>
-						<image class="col-xs-3" src="data:image/jpeg;base64,{{sec.image}}"></image>
+						<div class="col-xs-11 ds"> {{ sec.description }} </div>
+						<image class="col-xs-1" src="data:image/jpeg;base64,{{sec.image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
 					</div>
 				{% endfor %}
 			{% else %}
