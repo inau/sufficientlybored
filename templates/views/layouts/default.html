@@ -41,11 +41,15 @@
 	{# jQuery 1.11.3 is included by default, and required by both Bootstrap
 	and the KeystoneJS Content Editor. If you are not targeting IE8,
 	you can upgrade to 2.1.4 (also bundled) for better performance. #}
-	<script src="/js/jquery/jquery-1.11.3.min.js"></script>
+	<script src="/js/jquery/jquery-2.1.4.min.js"></script>
 
 	{# Customise which Bootstrap javascript files are served by including
 	them specifically here, instead of bootstrap-3.3.5.min.js #}
 	<script src="/js/bootstrap/bootstrap-3.3.5.min.js"></script>
+	
+	
+	<script src="/js/chosen-js/chosen.jquery.js"></script>
+	<link href="/js/chosen-js/chosen.css" rel="stylesheet">
 
 	{# The KeystoneJS Content Editor provides support for ks-editable data attributes,
 	which generate links to edit content for users who can access Keystone #}
@@ -80,11 +84,11 @@
 					<input type="hidden" name="action" value="user.signin">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input id="email" type="text" class="form-control" name="email" value="{{formData.email}}" placeholder="Email">
+						<input autocomplete="on" id="email" type="text" class="form-control" name="email" value="{{formData.email}}" placeholder="Email">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-						<input id="password" type="password" class="form-control" name="password" value="{{formData.password}}" placeholder="Password">
+						<input autocomplete="off" id="password" type="password" class="form-control" name="password" value="{{formData.password}}" placeholder="Password">
 					</div>
 					<br>
 					<button class="btn btn-success col-xs-12" type="submit">Submit</button>
@@ -156,7 +160,6 @@
 			</div>
 		{% endif %}
 		</div>
-
 		{% block headerextra %}{% endblock %}
 	</div>
 

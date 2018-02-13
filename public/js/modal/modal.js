@@ -19,9 +19,10 @@ function modal_show(modal_id) {
 	 
 }
 
-function signin_request(user, pass) {
-//	post /keystone/api/session/signin
-	$.post(
-		
-	);
+function getCheckboxList(checkbox_common_class, oncomplete ) {
+	var vals = [];
+	$('input.'+checkbox_common_class+':checkbox:checked').each(function() {
+		vals.push( $(this).val() );
+	});
+	oncomplete(vals);
 }

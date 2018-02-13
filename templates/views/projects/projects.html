@@ -1,36 +1,122 @@
 {% extends "layouts/default.html" %}
 
-{% macro descblock(title, descr) %}
+{% macro descblock(descr) %}
 <div class="col-xs-12 col-md-9">
-	<hh3 class="ds">{{title}}</hh3><br>
-	<hr>
-	<textarea readonly class="ds item-descr col-md-9" style="text-justify: distribute">
-		{{descr}}
+	<!--
+		<textarea readonly class="ds item-descr col-xs-12" style="text-justify: distribute">
 	</textarea>
+	-->
+		{{descr}}
 </div>
 {% endmacro %}
 {% macro imgblock(src) %}
-<image class="col-xs-12 col-md-3 img-circle" src="data:image/jpeg;base64,{{src}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+<image class="col-xs-4 col-xs-offset-4 col-md-offset-0 col-md-3 img-circle" src="data:image/jpeg;base64,{{src}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
 {% endmacro %}
 
+{% block headerextra %}
+<!-- The Modal -->
+<div id="filter_modal" class="backdrop modal-hide col-xs-12 row">
+
+	<!-- Modal content -->
+	<div class="col-xs-1 col-md-4"></div>
+	<div class="mContent modal-content col-xs-10 col-md-4">
+		<div>
+			<span onclick="modal_hide('filter_modal');" class="close">&times;</span>
+		</div>
+		<br>
+		<br>
+		<form id="cbroot">
+			<div class="input-group row col-xs-12">
+				{% for cat in data.categories %}
+				<div class="col-md-4 col-xs-6">
+					<label class="checkbox-inline">
+						<input class="cbid " type="checkbox" value="{{cat._id}}"
+							   {% if meta[cat._id].checked %}
+							   checked
+							   {% endif %}
+							   name="{{cat.name}}">{{cat.name}}
+					</label>
+				</div>
+				{% endfor %}
+			</div>
+		</form>
+		<br>
+		<form id="filter-form" novalidate action="/projects" method="get">
+			
+			<button class="btn btn-success col-xs-12" onclick="getCheckboxList('cbid', function(r){
+				var $inp = $('<input>');
+				
+				$inp.attr({
+					type: 'hidden',
+					name: 'cats',
+					value: r
+				});
+
+				$('#filter-form').append($inp);
+				return false;
+			});">Filter</button>
+		</form>
+	</div>
+
+</div>
+
+
+<div class="mNav col-xs-12">
+	<div class="container-fluid" style="margin-top: 5px; margin-bottom: 5px;">
+		<div class="col-xs-12">
+			{% if filter.categories %}
+			<a href="/projects">
+				<span class="btn-danger btn pull-left"><i class="glyphicon glyphicon-remove"></i></span>
+			</a>
+			<div class="row">
+			{% for cat in data.categories %}
+				{% if meta[cat._id].checked %}
+				<a href="/projects?cats={{cat._id}}">
+					<span class="label label-default">{{cat.name}}</span>
+				</a>
+				{% endif %}
+			{% endfor %}
+			</div>
+			{% endif %}
+			<span class="btn-success btn pull-right" onclick="modal_show('filter_modal');"><i class="glyphicon glyphicon-sort"></i></span>
+		</div>
+	</div>
+</div>
+{% endblock headerextra %}
+
 {% block content %}
-	<div class="container-fluid">
+	<div class="mContent container-fluid">
 			{% if data.projects %}
 				{% set cls = cycler(0, 1) %}
 				{% for pro in data.projects %}
 				<a href="/projects/{{pro._id}}">
-					<div class="col-xs-12 jumbotron mJumbotron">
+					<div class="col-xs-12 jumbotron mJumbotron mContent">
+						<div col-xs-12>
+							<hh3 class="ds">{{pro.title}}</hh3><br>
+						</div>
+						<div class="col-xs-12">
+							{% for cat in pro.categories %}
+								<span class="label label-default">{{ meta[cat].label }}</span>
+							{% endfor %}
+						</div>
+						<hr>
 						{% if cls.next() == 0 %}
 						{{imgblock(pro.sections[0].image)}}
-						{{descblock(pro.title, pro.sections[0].description)}}
+						{{descblock(pro.sections[0].description)}}
 						{% else %}
-						{{descblock(pro.title, pro.sections[0].description)}}
+						{{descblock(pro.sections[0].description)}}
 						{{imgblock(pro.sections[0].image)}}
 						{% endif %}
 					</div>
 				</a>
-				<hr>
+				
 				{% endfor %}
 			{% endif %}
 	</div>
+
+<script type="text/javascript">
+	$('#cat-sel').chosen({width: "80%"});
+</script>
+
 {% endblock %}
+

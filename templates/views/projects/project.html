@@ -1,14 +1,14 @@
 {% extends "layouts/default.html" %}
 
 {% macro descblock(descr) %}
-<div class="col-xs-9">
+<div class="col-xs-12 col-md-9">
 	<textarea readonly class="ds item-descr" style="text-justify: distribute">
 		{{descr}}
 	</textarea>
 </div>
 {% endmacro %}
 {% macro imgblock(src) %}
-<div class="col-xs-3">
+<div class="col-xs-1 col-md-3">
 	<image class="col-xs-12" src="{{src}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
 </div>
 {% endmacro %}

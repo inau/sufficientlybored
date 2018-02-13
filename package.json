@@ -3,17 +3,24 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "async": "2.1.4",
+    "consolidate": "0.14.5",
+    "dotenv": "4.0.0",
     "keystone": "4.0.0-beta.5",
     "lodash": "^4.13.1",
-    "consolidate": "0.14.5",
-    "nunjucks": "3.0.0",
-    "dotenv": "4.0.0",
-    "async": "2.1.4"
+    "nunjucks": "3.0.0"
   },
   "devDependencies": {
     "eslint": "3.15.0",
     "eslint-config-keystone": "3.0.0",
     "eslint-plugin-react": "^5.1.1"
+  },
+  "frontendDependencies": {
+    "target": "static/build",
+    "packages": {
+      "showdown": "^1.8.6",
+      "chosen-js": "^1.8.3"
+    }
   },
   "scripts": {
     "lint": "eslint .",
