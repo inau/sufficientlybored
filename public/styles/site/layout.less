@@ -1,7 +1,14 @@
+@media (max-width: @screen-xs) {
+  body{font-size: 10px;}
+}
+
+@media (max-width: @screen-sm) {
+  body{font-size: 14px;}
+}
+
 #header {
 	//margin-bottom: 10px;
 }
-
 
 
 #footer {
@@ -30,4 +37,47 @@
 		  -1px 1px 0 #000,
 		  1px 1px 0 #000;
   color: white;
+}
+.item-container {
+  padding: 25px;
+  min-height: 200px;
+  max-height: 200px;
+}
+.car-con {
+  position: absolute;
+  //background-attachment: fixed;
+}
+.car-txt {
+  margin-top: 25px;
+  font-size: 1.2em;
+}
+.car-background {
+  background-color: rgba(255,252,254,0.80);
+  min-height: 25%;
+}
+
+.carousel-indicators-bot-r {
+  text-align: right;
+  float: right;
+  right: 2% !important;
+  left: inherit;
+}
+
+.carousel-btn li {
+  background-color: #0000ff;
+  box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.5);
+}
+.carousel-btn .active {
+  background-color: gainsboro;
+}
+
+.carousel-indicators-top-r {
+  position: absolute;
+  z-index: 99;
+  text-align: right;
+  height: 15px;
+  top: -20px;
+  float: right;
+  right: 2% !important;
+  left: inherit;
 }

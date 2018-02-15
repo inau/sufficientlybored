@@ -24,6 +24,7 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "prestart": "start mongod.exe --dbpath E:\\data\\mongo",
     "start": "node keystone.js"
   }
 }

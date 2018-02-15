@@ -1,10 +1,42 @@
 {% extends "layouts/default.html" %}
 
 {% block content %}
+<!-- The Modal -->
+<div id="filter_modal" class="backdrop modal-hide col-xs-12 row">
 
+	<!-- Modal content -->
+	<div class="col-xs-1 col-md-4"></div>
+	<div class="mContent modal-content col-xs-10 col-md-4">
+		<div>
+			<span onclick="modal_hide('filter_modal');" class="close">&times;</span>
+		</div>
+		<br>
+		<br>
+		<form id="cbroot">
+			<div class="input-group row col-xs-12">
+				{% for cat in data.categories %}
+				<div class="col-md-4 col-xs-6">
+					<label class="checkbox-inline">
+						<input class="cbid " type="checkbox" value="{{cat._id}}"
+							   {% if meta[cat._id].checked %}
+							   checked
+							   {% endif %}
+							   name="{{cat.name}}">{{cat.name}}
+					</label>
+				</div>
+				{% endfor %}
+			</div>
+		</form>
+		<br>
+		<form id="filter-form">
+			<input type="hidden" value="{{getMeta}}" id="meta-data">
+			<button class="btn btn-success col-xs-12" onclick="return apply_click('meta-data')">Apply</button>
+		</form>
+	</div>
+
+</div>
 
 <script src="../../js/image/component.js"></script>
-<script src="../../js/jquery/jquery-2.1.4.js"></script>
 
 <div class="container-fluid">
 	<div class="jumbotron mJumbotron mContent col-xs-12">
@@ -47,22 +79,30 @@
 			<div class="col-md-12 col-xs-12">
 				<div class="input-group">
 					<span class="input-group-addon">Start date</span>
-					<input id="from" type="date" class="form-control" name="from" value="{{formData.from}}" placeholder="Started">
+					<input id="from" type="date" class="form-control" name="from" value="{{formData.from}}">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
 				</div>
 				<div class="input-group">
-					<span class="input-group-addon"> End date </span>
-					<input id="to" type="date" class="form-control" name="to" value="{{formData.from}}" placeholder="Started">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+				<span class="input-group-addon"> End date </span>
+				<input id="to" type="date" class="form-control" name="to" value="{{formData.from}}">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+			</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+					<input disabled id="cats_label" type="text" class="form-control" name="cats" value="{{formData.cats}}" onchange="function(){console.log('input change');};" placeholder="Chose Categories">
+					<span class="input-group-addon btn btn-success" onclick="modal_show('filter_modal');" class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
 				</div>
 				<br>
-				<input type="hidden" name="action" value="project.create">
+				{% for cat in data.categories %}
+				<span class="label label-default">{{ meta[cat].label }}</span>
+				{% endfor %}
 				<div class="input-group col-xs-12">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
 					<input id="title" type="text" class="form-control" name="title" value="{{formData.title}}" placeholder="Project Title">
 					<span class="input-group-addon btn btn-success" onclick="$('#proj-form').submit()"><i class="glyphicon glyphicon-plus"></i></span>
 				</div>
-				
+				<input type="hidden" name="action" value="project.create">
 			</div>
 		</form>
 		{% endif %}
@@ -76,7 +116,6 @@
 	{% endif %}
 </div>
 </div>
-
 
 <script type="text/javascript">
 //	$('.cho-sel').chosen({});
@@ -136,6 +175,36 @@
 		//prepare image reset button
 		$('#img_reset_btn').removeClass('hidden');
 		return false;
+	};
+	
+	function apply_click(meta_id) {
+			var meta =  $('#'+meta_id).attr('value');
+			console.log('raw ' + meta);
+			var jmeta = JSON.parse( meta );
+			console.log('pos ' + jmeta);
+			return getCheckboxList('cbid', function(r){
+				var $inp = $('<input>');
+				$inp.attr({
+					type: 'hidden',
+					name: 'cats',
+					value: r
+				});
+				$('#filter-form').append($inp);
+				
+				var lbl = [];
+				console.log('result ' + JSON.stringify(r));
+				
+				for(var i = 0; i < r.length; i++ ) {
+					console.log('key ' + r[i]);
+					lbl.push( jmeta[ r[i] ].label );
+				}
+				console.log(lbl);
+				$('#cats_label').attr('value', lbl);
+				
+				modal_hide('filter_modal');
+
+				return false;
+			});
 	};
 
 </script>

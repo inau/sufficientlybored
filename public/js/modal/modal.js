@@ -24,5 +24,5 @@ function getCheckboxList(checkbox_common_class, oncomplete ) {
 	$('input.'+checkbox_common_class+':checkbox:checked').each(function() {
 		vals.push( $(this).val() );
 	});
-	oncomplete(vals);
+	return oncomplete(vals);
 }

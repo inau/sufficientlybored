@@ -49,7 +49,7 @@ exports = module.exports = function (req, res) {
 		}
 		else locals.filter = {};
 
-		project.model.find(locals.filter).exec(function (err, pros) {
+		project.model.find(locals.filter).sort("from").exec(function (err, pros) {
 			if (err) {
 				req.flash('error', {title: 'Entity err',detail: '' + err.messages});
 				next(err);

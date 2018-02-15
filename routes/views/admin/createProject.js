@@ -6,6 +6,7 @@
 var keystone = require('keystone');
 var db_project = keystone.list('Project');
 var db_section = keystone.list('Section');
+var db_category = keystone.list('Category');
 
 exports = module.exports = function (req, res) {
 
@@ -18,8 +19,27 @@ exports = module.exports = function (req, res) {
 	};
 	locals.data = {
 	};
+	locals.meta = {};
 	locals.data.pid = req.query.pid;
 
+	view.on('init', function (next) {
+		db_category.model.find().sort('name').exec(function (err, cats) {
+			if(err) {
+				next(err);
+			} else {
+				locals.data.categories = cats;
+
+				locals.data.categories.map(function(c,i){
+					//locals.meta[ c.name ] = n;
+					locals.meta[ c._id ] = {id: c._id, label: c.name, checked: false};
+				});
+				locals.getMeta =  JSON.stringify( locals.meta );
+
+				next(err);
+			}
+		});
+	});
+	
 	view.on('init', function (next) {
 		if(locals.data.pid) {
 			db_project.model.findOne({_id: locals.data.pid}).exec(function (err, pro) {
@@ -37,6 +57,7 @@ exports = module.exports = function (req, res) {
 		}
 		else next();
 	});
+
 
 	//console.log('request');
 
