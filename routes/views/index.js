@@ -13,7 +13,7 @@ exports = module.exports = function (req, res) {
 	locals.formData = req.body || {};
 
 	view.on('init', function (next) {
-		project.model.find().limit(3).exec(function (err, pros) {
+		project.model.find().sort("-from").limit(3).exec(function (err, pros) {
 			if(err) {
 				next(err);
 			} else {
