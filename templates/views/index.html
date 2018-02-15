@@ -2,12 +2,15 @@
 
 {% macro carblock(href,title,descr,image,activestate) %}
 <div class="item {{'active' if activestate == 0 else ''}}">
-	<div class="container col-xs-12 item-container text-center">
+	<div class="col-xs-12 item-container">
+		<div class="col-xs-10 col-sm-6 col-md-6 car-txt" >
 		<a href="{{href}}">
 			<i class="glyphicon glyphicon-link"></i><hh4 class="ds">{{title}}</hh4>
 		</a>
-		<image class="col-xs-4 pull-left car-con" src="data:image/jpeg;base64,{{image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
-		<div class="col-xs-10 col-sm-6 col-md-6 car-con car-txt pull-right" >{{descr}}</div>		
+			{{descr | safe}}
+		</div>
+		<image class="col-xs-4 car-con" src="data:image/jpeg;base64,{{image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+
 	</div>
 </div>
 {% endmacro %}
@@ -34,7 +37,7 @@
 			<hh3>Recent Projects:</hh3>
 		<div class="carousel-inner">
 			{% for i in max_sec %}
-			{{carblock('/projects/'+projects[i]._id,projects[0].title, projects[i].sections[0].description, projects[0].sections[0].image, i)}}
+			{{carblock('/projects/'+projects[i]._id, projects[0].title, projects[i].sections[0].description.html, projects[0].sections[0].image, i)}}
 			{% endfor %}
 		</div>
 		</div>

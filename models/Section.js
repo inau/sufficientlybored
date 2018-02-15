@@ -9,7 +9,7 @@ var Section = new keystone.List('Section');
 
 Section.add({
 		project: {type: Types.Relationship, ref: 'Project', initial: true, required: true, index: true},
-		description: {type: Types.Text, required: true, initial: true},
+		description: {type: Types.Markdown, height:500, required: true, initial: true},
 		image : {type: Types.Text }
 });
 

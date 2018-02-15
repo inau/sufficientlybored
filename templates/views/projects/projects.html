@@ -2,11 +2,7 @@
 
 {% macro descblock(descr) %}
 <div class="col-xs-12 col-md-9">
-	<!--
-		<textarea readonly class="ds item-descr col-xs-12" style="text-justify: distribute">
-	</textarea>
-	-->
-		{{descr}}
+		{{descr | safe}}
 </div>
 {% endmacro %}
 {% macro imgblock(src) %}
@@ -103,9 +99,9 @@
 						<hr>
 						{% if cls.next() == 0 %}
 						{{imgblock(pro.sections[0].image)}}
-						{{descblock(pro.sections[0].description)}}
+						{{descblock(pro.sections[0].description.html)}}
 						{% else %}
-						{{descblock(pro.sections[0].description)}}
+						{{descblock(pro.sections[0].description.html)}}
 						{{imgblock(pro.sections[0].image)}}
 						{% endif %}
 					</div>
