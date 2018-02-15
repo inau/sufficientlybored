@@ -42,7 +42,9 @@
 	and the KeystoneJS Content Editor. If you are not targeting IE8,
 	you can upgrade to 2.1.4 (also bundled) for better performance. #}
 	<script src="/js/jquery/jquery-2.1.4.min.js"></script>
-
+	
+	<script src="/js/jquery-mobile/j-mob.js"></script>
+	
 	{# Customise which Bootstrap javascript files are served by including
 	them specifically here, instead of bootstrap-3.3.5.min.js #}
 	<script src="/js/bootstrap/bootstrap-3.3.5.min.js"></script>
@@ -178,6 +180,21 @@
 
 			{# The content block should contain the body of your template"s content #}
 			{% block content %}{% endblock %}
+			<script>
+				function setup_swipe(carousel_id) {
+						$("#"+carousel_id).touchwipe({
+							wipeLeft: function() {
+								$("#"+carousel_id).carousel('next');
+							},
+							wipeRight: function() {
+								$("#"+carousel_id).carousel('prev');
+							},
+							min_move_x: 20,
+							min_move_y: 20,
+							preventDefaultEvents: false
+						});
+				}
+			</script>
 		</div>
 
 
@@ -186,8 +203,8 @@
 			{# You don"t _have_ to include a link saying your site is powered by KeystoneJS, but we appreciate it! #}
 			<p>Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.</p>
 		</div>
-
-
-		
+	
 	</body>
 </html>
+
+

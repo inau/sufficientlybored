@@ -61,27 +61,25 @@
 </div>
 
 
-<div class="container-fluid row" style="margin-top: 15px;">
-			<div class="col-xs-1">
+<div class="container col-xs-12" style="margin-top: 15px;">
+			<div class="col-xs-12">
 				{% if filter.categories %}
 				<a href="/projects">
-				<button class="btn-danger btn glyphicon glyphicon-remove"></button>
+					<button class="btn-danger btn glyphicon glyphicon-remove pull-left"></button>
 				</a>
 				{% endif %}
+				<button class="btn-success btn glyphicon glyphicon-sort pull-right" onclick="modal_show('filter_modal');"></button>
 			</div>
-			<div class="col-xs-10">
+			<div class="col-xs-12">
 				{% if filter.categories %}
-				{% for cat in data.categories %}
-				{% if meta[cat._id].checked %}
-				<a href="/projects?cats={{cat._id}}">
-					<div class="label label-default">{{cat.name}}</div>
-				</a>
+					{% for cat in data.categories %}
+						{% if meta[cat._id].checked %}
+						<a href="/projects?cats={{cat._id}}">
+							<div class="label label-default">{{cat.name}}</div>
+						</a>
+						{% endif %}
+					{% endfor %}
 				{% endif %}
-				{% endfor %}
-				{% endif %}
-			</div>
-			<div class="col-xs-1">
-				<button class="btn-success btn glyphicon glyphicon-sort" onclick="modal_show('filter_modal');"></button>
 			</div>
 </div>
 {% endblock headerextra %}
@@ -118,4 +116,5 @@
 	</div>
 
 {% endblock %}
+
 
