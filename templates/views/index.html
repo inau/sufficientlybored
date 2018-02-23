@@ -1,41 +1,45 @@
 {% extends "layouts/default.html" %}
 
 {% macro carblock(href,title,descr,image,activestate) %}
-<div class="item {{'active' if activestate == 0 else ''}}">
+<div class="item ">
 	<div class="col-xs-12 item-container">
-		<div class="col-xs-10 col-sm-6 col-md-6 car-txt" >
+		<div class="col-xs-4 col-md-2">
+			<image class="col-xs-12 car-con" src="data:image/jpeg;base64,{{image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+		</div>
+		<div class="col-xs-8 col-sm-6 col-md-8 car-txt" >
 		<a href="{{href}}">
-			<i class="glyphicon glyphicon-link"></i><hh4 class="ds">{{title}}</hh4>
+			<i class="glyphicon glyphicon-link car-link"></i><hh4 class="car-link">{{title}}</hh4>
 		</a>
 			{{descr | safe}}
 		</div>
-		<image class="col-xs-4 car-con" src="data:image/jpeg;base64,{{image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
 
 	</div>
 </div>
 {% endmacro %}
 
 {% block headerextra %}
-<div class="jumbotron mJumbotron banner">
-	<h1>Sufficiently Bored</h1>
-</div>
+
 {% endblock %}
 
 {% block content %}
 
+<div id="recent-carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
 {% if projects %}
+{% set max_list = range(projects.length+1) %}
 {% set max_sec = range(projects.length) %}
-<div class="container-fluid">
-	<div id="recent-carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
 		<ol class="carousel-indicators carousel-indicators-bot-r">
-			{% for i in max_sec %}
+			{% for i in max_list %}
 			<li data-target="#recent-carousel" data-slide-to="{{i}}"  class=" {{ 'active' if i == 0 else ' '}}"></li>
 			{% endfor %}
 		</ol>
 		
 		<div class="car-background mShadow">
-			<hh3>Recent Projects:</hh3>
 		<div class="carousel-inner">
+			<div class="item active">
+					<div class="col-xs-12 item-container banner">
+						<h1 class="hb">Sufficiently Bored</h1>
+					</div>
+			</div>
 			{% for i in max_sec %}
 			{{carblock('/projects/'+projects[i]._id, projects[i].title, projects[i].sections[0].description.html, projects[i].sections[0].image, i)}}
 			{% endfor %}
@@ -43,7 +47,6 @@
 		</div>
 
 	</div>
-</div>
 {% endif %}
 
 	<div class="container-fluid">

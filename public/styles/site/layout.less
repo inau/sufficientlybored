@@ -24,6 +24,10 @@
     height: auto;
 }
 
+.hb {
+  font-size: 8vh;
+}
+
 .banner {
   background-image: url('/images/banner2.jpeg');
   background-repeat: no-repeat;
@@ -40,20 +44,31 @@
 }
 .item-container {
   padding: 25px;
-  min-height: 200px;
-  max-height: 200px;
+  min-height: 300px;
+  max-height: 300px;
+}
+.car-link {
+  color: white;
+}
+.car-link:hover {
+  text-decoration: underline;
 }
 .car-con {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
+  z-index: 0;
   //background-attachment: fixed;
 }
 .car-txt {
+  color: white;
   font-size: 1.2em;
+  z-index: 1;
 }
 .car-background {
-  background-color: rgba(255,252,254,0.80);
+ // background-color: rgba(255,252,254,0.80);
+  background-color: rgba(0, 0, 139, 0.6);
+
   min-height: 25%;
 }
 
