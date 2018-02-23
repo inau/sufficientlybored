@@ -8,9 +8,16 @@
  */
 //require('dotenv').config();
 
+var envv = process.env;
 exports.create = {
 	User: [
-		JSON.parse(process.env.CREATE_ADMIN),
+		{ 	
+			"name.first" : "Admin",
+			"name.last": "User",
+			"email": envv.CREATE_ADMIN_USER_EMAIL,
+			"password": envv.CREATE_ADMIN_USER_PASS,
+			"isAdmin": true
+		},
 	]
 };
 

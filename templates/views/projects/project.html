@@ -30,7 +30,17 @@
 	<div class="container-fluid">
 		<div class="jumbotron mJumbotron mContent col-xs-12">
 			{% if project %}
-				{% if user.canAccessKeystone %}
+			<span class="col-xs-12">
+				<button class="col-xs-2 carousel-control-prev btn btn-default ds pull-left" href="#recent-carousel" data-slide="prev"><i class="carousel-control-prev-icon">Prev</i></button>
+				<span class="col-xs-8">
+					<pp class="visible-xs" style="font-size: 1em; text-align: center">Swipe to switch pane</pp>					
+				</span>
+				<button class="col-xs-2 carousel-control-next btn btn-default ds pull-right" href="#recent-carousel" data-slide="next"><i class="carousel-control-next-icon">Next</i></button>
+			</span>
+			
+			<hr>
+
+			{% if user.canAccessKeystone %}
 					<a href="/admin/createproject?pid={{pid}}">
 						<pp class=""><i class="glyphicon glyphicon-edit"></i><hh3 class="ds">{{ project.title }}</hh3>
 						</pp>
@@ -38,7 +48,6 @@
 				{% else %}
 				<hh3 class="ds">{{ project.title }}</hh3>
 				{% endif %}
-			<hr>
 			{% set max_sec = range(project.sections.length) %}
 			{% set cls = cycler(0, 1) %}
 				<div id="recent-carousel" class="carousel slide mbox col-xs-12" data-ride="carousel" data-wrap="false" data-interval="0">
@@ -53,6 +62,7 @@
 							{{ secblock( cls.next(), project.sections[i].description.html, project.sections[i].image, i ) }}
 						{% endfor %}
 					</div>
+					
 				</div>
 	
 				{% if project.links.length > 0 %}
