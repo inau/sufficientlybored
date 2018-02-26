@@ -3,10 +3,17 @@
 {% macro carblock(href,title,descr,image,activestate) %}
 <div class="item ">
 	<div class="col-xs-12 item-container">
-		<div class="col-xs-4 col-md-2">
-			<image class="col-xs-12 car-con" src="data:image/jpeg;base64,{{image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+		<image class="col-sm-2 hidden-xs" src="data:image/jpeg;base64,{{image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+		<image class="col-xs-12 car-con hidden-md hidden-lg hidden-sm" src="data:image/jpeg;base64,{{image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+		
+		<div class="hidden-xs col-sm-10 col-md-10 car-txt car-txt-bck-xs" >
+				<a href="{{href}}">
+					<i class="glyphicon glyphicon-link car-link"></i><hh4 class="car-link">{{title}}</hh4>
+				</a>
+				{{descr | safe}}
 		</div>
-		<div class="col-xs-8 col-sm-6 col-md-8 car-txt" >
+		
+		<div class="hidden-lg hidden-md hidden-sm col-xs-12 car-txt car-txt-bck-xs" >
 		<a href="{{href}}">
 			<i class="glyphicon glyphicon-link car-link"></i><hh4 class="car-link">{{title}}</hh4>
 		</a>

@@ -4,6 +4,8 @@
 // @url https://github.com/keystonejs/generator-keystone/issues/10
 //
 var keystone = require('keystone');
+var marked = require('marked');
+
 var db_project = keystone.list('Project');
 var db_section = keystone.list('Section');
 var db_category = keystone.list('Category');
@@ -50,6 +52,8 @@ exports = module.exports = function (req, res) {
 					keystone.populateRelated(pro,'sections', function() {
 						locals.data.project = pro;
 						console.log( JSON.stringify(pro) );
+						locals.getSectionMeta =  JSON.stringify( locals.data.project.sections );
+
 						next(err);
 					});
 				}
@@ -77,7 +81,7 @@ exports = module.exports = function (req, res) {
 		var newSection = new db_section.model(
 			{
 			project: locals.data.pid,
-			description: locals.formData.description,
+			description: {md: locals.formData.description, html: marked(locals.formData.description) },
 			image: binimage,
 		});
 		
@@ -87,6 +91,8 @@ exports = module.exports = function (req, res) {
 				req.flash('error', { title: 'An error occurred', detail: 'save section: '+JSON.stringify(err.errors) } );
 				next(err);
 			} else {
+				console.log( JSON.stringify(result) );
+
 				locals.data.project.sections.push(result);
 				
 				locals.data.project.save(function (errr, resu) {
@@ -128,6 +134,7 @@ exports = module.exports = function (req, res) {
 			title: locals.formData.title,
 			from: locals.formData.from,
 			to: locals.formData.from,
+			categories: locals.formData.cats.split(',') || []
 		});
 
 		newProject.save(function(err, result) {

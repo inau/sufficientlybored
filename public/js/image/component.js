@@ -50,11 +50,32 @@ var imageBlock = function(ph_id) {
 	return block;
 }
 
+var load_from_file = function(placeholder_id, raw_image, i) {
+	var fio = new FileReader();
+	var iM = imageManipulator(placeholder_id, raw_image, i, fio);
+
+	fio.onload = function(e) {
+		iM.orig_src.src = e.target.result;
+		//iM.raw_size = e.target.size;
+		iM.init();
+	};
+	fio.onloadend = function () {
+		iM.raw_size = fio.result.size;
+	}
+
+	// load the file data
+	fio.readAsDataURL(raw_image);
+}
+
+var load_from_dataurl = function(placeholder_id, image_url, i) {
+	
+}
+
 // Relies on bootstrap and jquery
 // placeholder_id is the string id of the element you embed into
 // raw_image is the file from the file input
-var imageManipulator = function(placeholder_id, raw_image, i) {
-	var fio = new FileReader();
+var imageManipulator = function(placeholder_id, raw_image, i, fio) {
+	//var fio = new FileReader();
 	var iM = {
 		orig_src: new Image(),
 		raw_size: null,
@@ -234,6 +255,8 @@ var imageManipulator = function(placeholder_id, raw_image, i) {
 	};
 
 
+	/**
+	
 	fio.onload = function(e) {
 		iM.orig_src.src = e.target.result;
 		//iM.raw_size = e.target.size;
@@ -245,7 +268,7 @@ var imageManipulator = function(placeholder_id, raw_image, i) {
 
 	// load the file data
 	fio.readAsDataURL(raw_image);
-	
+	**/
 	return iM;
 }
 

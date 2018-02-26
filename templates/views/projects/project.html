@@ -30,16 +30,17 @@
 	<div class="container-fluid">
 		<div class="jumbotron mJumbotron mContent col-xs-12">
 			{% if project %}
-			<span class="col-xs-12">
-				<button class="col-xs-2 carousel-control-prev btn btn-default ds pull-left" href="#recent-carousel" data-slide="prev"><i class="carousel-control-prev-icon">Prev</i></button>
-				<span class="col-xs-8">
-					<pp class="visible-xs" style="font-size: 1em; text-align: center">Swipe to switch pane</pp>					
+				{% if project.sections.length > 1 %}
+				<span class="col-xs-12">
+					<button class="col-xs-2 carousel-control-prev btn btn-default ds pull-left" href="#recent-carousel" data-slide="prev"><i class="carousel-control-prev-icon">Prev</i></button>
+					<span class="col-xs-8">
+						<pp class="visible-xs" style="font-size: 1em; text-align: center">Swipe to switch pane</pp>					
+					</span>
+					<button class="col-xs-2 carousel-control-next btn btn-default ds pull-right" href="#recent-carousel" data-slide="next"><i class="carousel-control-next-icon">Next</i></button>
 				</span>
-				<button class="col-xs-2 carousel-control-next btn btn-default ds pull-right" href="#recent-carousel" data-slide="next"><i class="carousel-control-next-icon">Next</i></button>
-			</span>
-			
-			<hr>
-
+				
+				<hr>
+				{% endif %}
 			{% if user.canAccessKeystone %}
 					<a href="/admin/createproject?pid={{pid}}">
 						<pp class=""><i class="glyphicon glyphicon-edit"></i><hh3 class="ds">{{ project.title }}</hh3>
