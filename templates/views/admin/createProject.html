@@ -162,22 +162,22 @@
 	}
 
 	function imageclear(edit_ph, preview_ph) {
-		$('#img_reset_btn').addclass('hidden');
-		$('#fimg_id').removeclass('hidden');
+		$('#img_reset_btn').addClass('hidden');
+		$('#fimg_id').removeClass('hidden');
 
-		var placeholder = document.getelementbyid(edit_ph), placeholder2 = document.getelementbyid(preview_ph);
-		while( placeholder.firstchild || placeholder2.firstchild ) {
-			if( placeholder.firstchild ) placeholder.removechild( placeholder.firstchild );
-			if( placeholder2.firstchild ) placeholder2.removechild( placeholder2.firstchild );
+		var placeholder = document.getElementById(edit_ph), placeholder2 = document.getElementById(preview_ph);
+		while( placeholder.firstChild || placeholder2.firstChild ) {
+			if( placeholder.firstChild ) placeholder.removeChild( placeholder.firstChild );
+			if( placeholder2.firstChild ) placeholder2.removeChild( placeholder2.firstChild );
 		}
 		$('#img_select').values = '';
 
 		return false;
 	}
 	function imagechange() {
-		$('#fimg_id').addclass('hidden');
+		$('#fimg_id').addClass('hidden');
 
-		var imgs = document.getelementbyid('img_select');
+		var imgs = document.getElementById('img_select');
 
 		var nm = [];
 		for (var i = 0; i < imgs.files.length; i++) {
@@ -197,7 +197,7 @@
 			}
 
 		//prepare image reset button
-		$('#img_reset_btn').removeclass('hidden');
+		$('#img_reset_btn').removeClass('hidden');
 		return false;
 	};
 	
@@ -214,11 +214,11 @@
 					name: 'cats',
 					value: r
 				});
-				$('#filter-form').find('#cats_val').replacewith($inp);
-				$('#proj-form').find('#cats_val').replacewith($inp);
+				$('#filter-form').find('#cats_val').replaceWith($inp);
+				$('#proj-form').find('#cats_val').replaceWith($inp);
 				
 				var lbl = [];
-				console.log('result ' + json.stringify(r));
+				console.log('result ' + JSON.stringify(r));
 				
 				for(var i = 0; i < r.length; i++ ) {
 					console.log('key ' + r[i]);
