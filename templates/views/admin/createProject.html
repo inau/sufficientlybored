@@ -59,80 +59,78 @@
 
 <div class="container-fluid">
 	<div class="jumbotron mjumbotron mcontent col-xs-12">
-	{% if user.canaccesskeystone %}
+	{% if user.canAccessKeystone %}
 		{% if not data.validationerrors %}
-		{% if data.project %}
-			{% if data.project.sections.length > 0 %}
-				<h2 class="ds">existing sections:</h2>
-				{% for sec in data.project.sections %}
-					<div class="col-xs-12">
-						<div class="col-xs-9 ds"> {{ sec.description.html | safe }} </div>
-						<image class="col-xs-1" src="data:image/jpeg;base64,{{sec.image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
-<!--						<button class="btn btn-danger glyphicon glyphicon-remove pull-right" onclick=""></button>
-						<button class="btn btn-default glyphicon glyphicon-edit pull-right" onclick="modal_seed('sec')"></button> -->
-					</div>
-				{% endfor %}
-			{% else %}
-			<h2 class="ds">add a section:</h2>
-			{% endif %}
-		
-		<form id="sec-form" class="col-xs-12" method="post">
-			<div class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-align-center"></i></span>
-				<textarea class="form-control" style="resize: none" rows="8" name="description" value="{{formdata.description}}" placeholder="description"></textarea>
-			</div>
-			<div class="input-group mjumbob col-xs-12">
-				<div id="imgph" class="col-xs-12" ></div>
-				<div id="imgpreview" class="col-xs-12" ></div>
-			</div>
-				<input type="hidden" name="pid" value="{{ data.pid }}">
-				<input type="hidden" name="action" value="section.create">
-				<div class="input-group col-xs-12">
-					<span class="input-group-addon btn btn-danger" ><i id="img_reset_btn" onclick="return imageclear('imgph','imgpreview');" class="glyphicon glyphicon-remove hidden"></i></span>
-					<input class="form-control" id="img_select" type="file" accept="image/*" onchange="return imagechange();" >
-					<span class="input-group-addon btn btn-success" onclick="$('#sec-form').submit()"><i class="glyphicon glyphicon-plus"></i></span>
-				</div>
-
-		</form>
-		{% else %}
-		<h2 class="ds">create a new project:</h2>
-		<form id="proj-form" class="col-xs-12" method="post">
-			<div class="col-md-12 col-xs-12">
+			{% if data.project %}
+				{% if data.project.sections and data.project.sections.length > 0 %}
+					<h2 class="ds">existing sections:</h2>
+					{% for sec in data.project.sections %}
+						<div class="col-xs-12">
+							<div class="col-xs-9 ds"> {{ sec.description.html | safe }} </div>
+							<image class="col-xs-1" src="data:image/jpeg;base64,{{sec.image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+	<!--						<button class="btn btn-danger glyphicon glyphicon-remove pull-right" onclick=""></button>
+							<button class="btn btn-default glyphicon glyphicon-edit pull-right" onclick="modal_seed('sec')"></button> -->
+						</div>
+					{% endfor %}
+				{% else %}
+				<h2 class="ds">add a section:</h2>
+				{% endif %}
+			
+			<form id="sec-form" class="col-xs-12" method="post">
 				<div class="input-group">
-					<span class="input-group-addon">start date</span>
-					<input id="from" type="date" class="form-control" name="from" value="{{formdata.from}}">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-align-center"></i></span>
+					<textarea class="form-control" style="resize: none" rows="8" name="description" value="{{formdata.description}}" placeholder="description"></textarea>
+				</div>
+				<div class="input-group mjumbob col-xs-12">
+					<div id="imgph" class="col-xs-12" ></div>
+					<div id="imgpreview" class="col-xs-12" ></div>
+				</div>
+					<input type="hidden" name="pid" value="{{ data.pid }}">
+					<input type="hidden" name="action" value="section.create">
+					<div class="input-group col-xs-12">
+						<span class="input-group-addon btn btn-danger" ><i id="img_reset_btn" onclick="return imageclear('imgph','imgpreview');" class="glyphicon glyphicon-remove hidden"></i></span>
+						<input class="form-control" id="img_select" type="file" accept="image/*" onchange="return imagechange();" >
+						<span class="input-group-addon btn btn-success" onclick="$('#sec-form').submit()"><i class="glyphicon glyphicon-plus"></i></span>
+					</div>
+	
+			</form>
+			{% else %}
+			<h2 class="ds">create a new project:</h2>
+			<form id="proj-form" class="col-xs-12" method="post">
+				<div class="col-md-12 col-xs-12">
+					<div class="input-group">
+						<span class="input-group-addon">start date</span>
+						<input id="from" type="date" class="form-control" name="from" value="{{formdata.from}}">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+					</div>
+					<div class="input-group">
+					<span class="input-group-addon"> end date </span>
+					<input id="to" type="date" class="form-control" name="to" value="{{formdata.from}}">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
 				</div>
-				<div class="input-group">
-				<span class="input-group-addon"> end date </span>
-				<input id="to" type="date" class="form-control" name="to" value="{{formdata.from}}">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-			</div>
-				<br>
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-					<input disabled id="cats_label" type="text" class="form-control" name="cats" value="{{formdata.cats}}" onchange="function(){console.log('input change');};" placeholder="chose categories">
-					<span class="input-group-addon btn btn-success" onclick="modal_show('filter_modal');" class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
-					<input id="cats_val" type="hidden" name="cats_val" value="{{formdata.catsval}}">
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+						<input disabled id="cats_label" type="text" class="form-control" name="cats" value="{{formdata.cats}}" onchange="function(){console.log('input change');};" placeholder="chose categories">
+						<span class="input-group-addon btn btn-success" onclick="modal_show('filter_modal');" class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+						<input id="cats_val" type="hidden" name="cats_val" value="{{formdata.catsval}}">
+					</div>
+					<br>
+	
+					<div class="input-group col-xs-12">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+						<input id="title" type="text" class="form-control" name="title" value="{{formdata.title}}" placeholder="project title">
+						<span class="input-group-addon btn btn-success" onclick="$('#proj-form').submit()"><i class="glyphicon glyphicon-plus"></i></span>
+					</div>
+					<input type="hidden" name="action" value="project.create">
 				</div>
-				<br>
-
-				<div class="input-group col-xs-12">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
-					<input id="title" type="text" class="form-control" name="title" value="{{formdata.title}}" placeholder="project title">
-					<span class="input-group-addon btn btn-success" onclick="$('#proj-form').submit()"><i class="glyphicon glyphicon-plus"></i></span>
-				</div>
-				<input type="hidden" name="action" value="project.create">
-			</div>
-		</form>
-		{% endif %}
-		
-			
+			</form>
+			{% endif %}
 		{% else %}
 		{{ data.validationerrors }}
 		{% endif %}
 	{% else %}
-	<a href="/">you require admin access to be able to edit content...</a>
+		<a href="/">you require admin access to be able to edit content...</a>
 	{% endif %}
 </div>
 </div>

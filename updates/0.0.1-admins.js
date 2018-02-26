@@ -16,7 +16,7 @@ exports.create = {
 			"name.last": "User",
 			"email": envv.CREATE_ADMIN_USER_EMAIL,
 			"password": envv.CREATE_ADMIN_USER_PASS,
-			"isAdmin": true
+			"isAdmin": true,
 		},
 	]
 };
