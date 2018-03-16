@@ -61,22 +61,38 @@
 			<div class="col-xs-12">
 				{% if filter.categories %}
 				<a href="/projects">
-					<button class="btn-danger btn glyphicon glyphicon-remove pull-left"></button>
+					<button class="col-xs-1 btn-danger btn glyphicon glyphicon-remove pull-left"></button>
 				</a>
+				{% else %}
+				<div class="col-xs-1"></div>
 				{% endif %}
-				<button class="btn-success btn glyphicon glyphicon-sort pull-right" onclick="modal_show('filter_modal');"></button>
-			</div>
-			<div class="col-xs-12">
-				{% if filter.categories %}
+				<span disabled class="btn catss car-background col-xs-10">
+					{% if filter.categories %}
 					{% for cat in data.categories %}
-						{% if meta[cat._id].checked %}
-						<a href="/projects?cats={{cat._id}}">
-							<div class="label label-default">{{cat.name}}</div>
-						</a>
-						{% endif %}
+					{% if meta[cat._id].checked %}
+					<a href="/projects?cats={{cat._id}}">
+						<div class="label label-default">{{cat.name}}</div>
+					</a>
+
+					{% endif %}
 					{% endfor %}
-				{% endif %}
+					{% else %}
+						<div class="label label-default">ALL CATEGORIES</div>
+					{% endif %}
+				</span>
+				<button class="col-xs-1 btn-success btn glyphicon glyphicon-sort pull-right" onclick="modal_show('filter_modal');"></button>
 			</div>
+
+</div>
+
+<div class="container text-center">
+	<ul class="pagination">
+		<li class="page-item {{ 'disabled' if pageopts.curr == 1 else '' }}"><a class="page-link" href="?cats={{cat.filter}}&page={{(pageopts.prevpage())}}">Prev</a></li>
+		{% for i in range(1 , pageopts.max + 1) %}
+		<li class="page-item {{ 'active' if pageopts.curr == i else '' }}"><a class="page-link" href="?cats={{cat.filter}}&page={{i}}">{{i}}</a></li>
+		{% endfor %}
+		<li class="page-item {{ 'disabled' if pageopts.curr == pageopts.max else '' }}"><a class="page-link" href="?cats={{cat.filter}}&page={{pageopts.nextpage()}}">Next</a></li>
+	</ul>
 </div>
 {% endblock headerextra %}
 

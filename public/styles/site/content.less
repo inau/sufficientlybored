@@ -22,14 +22,43 @@ body {
   	background-image: url("/images/background.jpg");
   	background-repeat: repeat-y;
   	background-attachment: fixed;
-  	background-size: 100%;
+  	background-size: 100vw;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
 }
 
 .ds {
   color: black;
 }
 
+.catss.btn {
+  opacity: 1;
+}
+.catss.btn:hover {
+}
+.catss.btn:active {
+}
+
+hp {
+  text-transform: uppercase;
+  font-family: 'Ubuntu Mono', serif;
+  font-weight: 900;
+
+}
+p {
+  font-family: 'Arvo', serif;
+  font-weight: 700;
+}
+
 pp {
-  font-family: 'Lora', serif;
+  font-family: 'Josefin Slab', serif;
+//  font-family: 'Lora', serif;
   font-size: large;
 }

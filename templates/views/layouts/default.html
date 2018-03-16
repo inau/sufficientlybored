@@ -27,6 +27,7 @@
 		<![endif]-->
 
 		<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Arvo|Josefin+Slab+Ubuntu" rel="stylesheet">
 		
 		{# Include template-specific stylesheets by extending the css block #}
 		{% block css %}{% endblock %}
@@ -117,15 +118,15 @@
 						<ul class="nav navbar-nav navbar-left">
 							{% for link in navLinks %}
 								<li class="{{ 'active activeh' if link.key === section else '' }} ">
-									<a href="{{ link.href }}"><p class="{{ 'activeText' if link.key === section else 'mNavLabel' }}">{{ link.label }}</p></a>
+									<a href="{{ link.href }}"><hp class="{{ 'activeText' if link.key === section else 'mNavLabel' }}">{{ link.label }}</hp></a>
 								</li>
 							{% endfor %}
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							{% if user %}
-								<li><a href="/keystone/signout"><p class="mNavLabel">Sign Out</p></a></li>
+								<li><a href="/keystone/signout"><hp class="mNavLabel">Sign Out</hp></a></li>
 							{% else %}
-								<li><a href="" onclick="modal_show('signin_modal'); return false;"><p class="mNavLabel">Sign In</p></a></li>
+								<li><a href="" onclick="modal_show('signin_modal'); return false;"><hp class="mNavLabel">Sign In</hp></a></li>
 							{% endif %}
 						</ul>
 					</div>
@@ -150,12 +151,12 @@
 						<ul class="nav navbar-nav navbar-left">
 							{% for l in admLinks %}
 							<li class="{{ 'active activeh' if l.key === section else '' }} ">
-								<a href="{{ l.href }}"><p class="{{ 'activeText' if l.key === section else 'mNavLabel' }}">{{ l.label }}</p></a>
+								<a href="{{ l.href }}"><hp class="{{ 'activeText' if l.key === section else 'mNavLabel' }}">{{ l.label }}</hp></a>
 							</li>
 							{% endfor %}
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li><a href="/keystone"><p class="mNavLabel">Open Keystone</p></a></li>
+							<li><a href="/keystone"><hp class="mNavLabel">Open Keystone</hp></a></li>
 						</ul>
 					</div>
 				</div>

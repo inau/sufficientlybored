@@ -1,5 +1,20 @@
 {% extends "layouts/default.html" %}
 
+{% macro carblock2(href,title,descr,image,activestate) %}
+<div class="item ">
+	<image class="col-xs-12 car-con hidden-md hidden-lg hidden-sm" src="data:image/jpeg;base64,{{image}}" onerror="this.src='/images/proj_err.png';this.onerror=null;"></image>
+	<div class="hidden-xs col-md-4 item-container" style="background-repeat: no-repeat; background-image: url('data:image/jpeg;base64,{{image}}')" >
+		
+	</div>
+	<div class="col-xs-12 col-md-8 car-txt-bck-xs car-txt item-container">
+		<a href="{{href}}">
+			<i class="glyphicon glyphicon-link car-link"></i><hh4 class="car-link">{{title}}</hh4>
+		</a>
+		{{descr | safe}}
+	</div>
+</div>
+{% endmacro %}
+
 {% macro carblock(href,title,descr,image,activestate) %}
 <div class="item ">
 	<div class="col-xs-12 item-container">
@@ -43,12 +58,12 @@
 		<div class="car-background mShadow">
 		<div class="carousel-inner">
 			<div class="item active">
-					<div class="col-xs-12 item-container banner">
+					<div class="col-xs-12 item-container banner vertical-center">
 						<h1 class="hb">Sufficiently Bored</h1>
 					</div>
 			</div>
 			{% for i in max_sec %}
-			{{carblock('/projects/'+projects[i]._id, projects[i].title, projects[i].sections[0].description.html, projects[i].sections[0].image, i)}}
+			{{carblock2('/projects/'+projects[i]._id, projects[i].title, projects[i].sections[0].description.html, projects[i].sections[0].image, i)}}
 			{% endfor %}
 		</div>
 		</div>
